@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Dashboard from "./pages/Dashboard";
-import ProductForm from "./pages/ProductForm";
+import ProductForm from "./pages/Productform";
 import "./App.css";
 
 export default function App() {
