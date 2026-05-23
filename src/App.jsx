@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Dashboard       from "./pages/Dashboard";
-import ProductForm     from "./pages/ProductForm";
+import ProductForm     from "./pages/ProductForm.jsx";
 import ProductList     from "./pages/ProductList";
 import ProductDetail   from "./pages/ProductDetail";
 import OrderManagement from "./pages/OrderManagement";
