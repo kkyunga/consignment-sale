@@ -1,16 +1,86 @@
-# React + Vite
+# 셀러허브 (SellerHub)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+위탁판매 셀러를 위한 통합 관리 대시보드. 쿠팡·지마켓·네이버 등 여러 플랫폼의 매출, 주문, 취소/교환/반품을 한눈에 관리할 수 있습니다.
 
-Currently, two official plugins are available:
+## 주요 기능
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+### 대시보드
+- **매출 현황 카드**: 금일 매출액, 총 주문수, 순수익, 미처리 주문 요약
+- **매출 추이 차트**: 일/주/월/년 단위 선형 그래프 (Recharts)
+- **도넛 차트**: 플랫폼별 · 카테고리별 · 분기별 매출 비율
+- **CER 추이**: 취소 / 교환 / 반품 건수 및 상세 테이블
 
-## React Compiler
+### 상품 추가
+- **플랫폼 선택**: 쿠팡, 11번가, 네이버 기본 제공 + 커스텀 플랫폼 추가 (모달)
+- **수수료 툴팁**: 각 플랫폼별 수수료율 hover 안내
+- **옵션 관리**: 옵션 있음/없음 선택, 옵션 그룹(제목 + 내용) 동적 추가·삭제
+- **가격 정보**: 공급가 · 판매가 입력
+- **배송비 설정**: 무료 / 유료 / 조건부유료 선택, 산간지역 배송비 우편번호 범위 지정
+- **이미지 업로드**: 대표 이미지 1개 필수, 추가 이미지 3개, 상세 페이지 이미지
+- **플랫폼별 수익 계산**: 수수료·부가세 자동 계산 후 순이익 실시간 표시
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 기술 스택
 
-## Expanding the ESLint configuration
+| 항목 | 내용 |
+|------|------|
+| 프레임워크 | React 19 |
+| 빌드 도구 | Vite 8 |
+| 차트 | Recharts 3 |
+| 스타일 | CSS (Noto Sans KR, CSS 변수 기반 디자인 시스템) |
+| 린터 | ESLint 10 |
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 시작하기
+
+### 요구 사항
+- Node.js 18 이상
+
+### 설치 및 실행
+
+```bash
+# 의존성 설치
+npm install
+
+# 개발 서버 실행
+npm run dev
+```
+
+브라우저에서 `http://localhost:5173` 접속
+
+### 빌드
+
+```bash
+npm run build
+```
+
+빌드 결과물은 `dist/` 디렉터리에 생성됩니다.
+
+### 미리보기
+
+```bash
+npm run preview
+```
+
+## 프로젝트 구조
+
+```
+src/
+├── App.jsx          # 사이드바 레이아웃 및 페이지 라우팅
+├── App.css          # 전역 스타일 및 디자인 시스템 (CSS 변수)
+├── main.jsx         # React 진입점
+└── pages/
+    ├── Dashboard.jsx    # 대시보드 페이지 (매출 통계, 차트, CER 테이블)
+    └── Productform.jsx  # 상품 추가 폼 (플랫폼, 옵션, 가격, 배송, 이미지)
+```
+
+## 플랫폼 수수료 기준
+
+| 플랫폼 | 수수료율 |
+|--------|---------|
+| 쿠팡 (로켓위탁) | 10.8% |
+| 쿠팡 (아이템윈) | 5.8% |
+| 11번가 (일반) | 8% |
+| 11번가 (특가) | 12% |
+| 네이버 (스마트스토어) | 5.63% |
+| 네이버 (브랜드스토어) | 2% |
+
+> 부가세(10%)는 수익 계산 시 자동으로 차감됩니다.

@@ -16,7 +16,7 @@ const salesTrend = [
 
 const platformData = [
     { name: "쿠팡", value: 48 },
-    { name: "11번가", value: 31 },
+    { name: "지마켓", value: 31 },
     { name: "네이버", value: 21 },
 ];
 
@@ -38,7 +38,7 @@ const COLORS = ["#4f7df3", "#f97316", "#10b981", "#a78bfa", "#f59e0b"];
 
 const cerTable = [
     { platform: "쿠팡", product: "콜라 (10개)", price: "16,000", buyer: "김경아", status: "교환" },
-    { platform: "11번가", product: "우유 (2L)", price: "4,500", buyer: "이민수", status: "반품" },
+    { platform: "지마켓", product: "우유 (2L)", price: "4,500", buyer: "이민수", status: "반품" },
     { platform: "네이버", product: "물티슈 (100매)", price: "8,900", buyer: "박지혜", status: "취소" },
     { platform: "쿠팡", product: "과자 세트", price: "22,000", buyer: "최태양", status: "교환" },
 ];

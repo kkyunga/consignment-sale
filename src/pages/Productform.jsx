@@ -59,7 +59,7 @@ function PlatformModal({ onClose, onAdd }) {
 ────────────────────────────────────── */
 const FEE_INFO = {
     쿠팡: "로켓위탁: 판매가의 10.8%\n아이템윈: 판매가의 5.8%",
-    "11번가": "일반: 판매가의 8%\n특가: 판매가의 12%",
+    지마켓: "일반: 판매가의 8%\n특가: 판매가의 12%",
     네이버: "스마트스토어: 판매가의 5.63%\n브랜드스토어: 판매가의 2%",
 };
 
@@ -197,7 +197,7 @@ function OptionGroup({ group, groupIndex, onUpdate, onRemoveGroup }) {
    Platform Tab Margin Panel
 ────────────────────────────────────── */
 function PlatformMarginPanel({ platform, supplyPrice, salePrice }) {
-    const feeRates = { 쿠팡: 0.108, "11번가": 0.08, 네이버: 0.0563, 지마켓: 0.1 };
+    const feeRates = { 쿠팡: 0.108, 지마켓: 0.1, 네이버: 0.0563};
     const vatRate = 10;
 
     const fee = Math.round((salePrice || 0) * (feeRates[platform] || 0.1));
@@ -257,7 +257,7 @@ function PlatformMarginPanel({ platform, supplyPrice, salePrice }) {
 /* ──────────────────────────────────────
    Product Form (Main)
 ────────────────────────────────────── */
-const PLATFORMS_DEFAULT = ["쿠팡", "11번가", "네이버"];
+const PLATFORMS_DEFAULT = ["쿠팡", "지마켓", "네이버"];
 
 /** 새 옵션 그룹 기본값 */
 const newOptionGroup = () => ({ title: "", items: [{ content: "" }] });
@@ -287,7 +287,7 @@ export default function ProductForm() {
     const [remoteAreas, setRemoteAreas] = useState([{ name: "", zipFrom: "", zipTo: "", cost: "" }]);
 
     const [activeTab, setActiveTab] = useState("쿠팡");
-    const platformTabs = ["쿠팡", "11번가", "지마켓"];
+    const platformTabs = ["쿠팡", "지마켓", "네이버"];
 
     /* ── 플랫폼 ── */
     const handlePlatformToggle = (p) =>
@@ -498,7 +498,7 @@ export default function ProductForm() {
                     {shippingType === "paid" && (
                         <div className="sub-section" style={{ marginLeft: 106 }}>
                             <div className="option-row">
-                                <span style={{ fontSize: 12, color: "var(--text-secondary)" }}>비용</span>
+                                <span style={{ fontSize: 12, color: "var(--text-secondary)" }}>배송비</span>
                                 <input type="number" className="sm" placeholder="0"
                                        value={shippingCost} onChange={(e) => setShippingCost(e.target.value)} />
                                 <span style={{ fontSize: 13, color: "var(--text-secondary)" }}>원</span>
@@ -558,7 +558,7 @@ export default function ProductForm() {
                                     <span style={{ color: "var(--text-muted)" }}>~</span>
                                     <input type="text" style={{ width: 70 }} placeholder="63999"
                                            value={area.zipTo} onChange={(e) => updateRemoteArea(i, "zipTo", e.target.value)} />
-                                    <span style={{ fontSize: 12, color: "var(--text-secondary)" }}>비용</span>
+                                    <span style={{ fontSize: 12, color: "var(--text-secondary)" }}>배송비</span>
                                     <input type="number" className="sm" placeholder="5000"
                                            value={area.cost} onChange={(e) => updateRemoteArea(i, "cost", e.target.value)} />
                                     <span style={{ fontSize: 13, color: "var(--text-secondary)" }}>원</span>
