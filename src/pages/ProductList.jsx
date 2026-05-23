@@ -22,7 +22,7 @@ const COLUMNS = [
     { key: "platform",      label: "플랫폼" },
     { key: "name",          label: "상품명" },
     { key: "source",        label: "출처" },
-    { key: "supplyPrice",   label: "공급가" },
+    { key: "supplyPrice",   label: "매입가" },
     { key: "salePrice",     label: "판매가" },
     { key: "shipping",      label: "배송비" },
     { key: "extraShipping", label: "추가배송비" },

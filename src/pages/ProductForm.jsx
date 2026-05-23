@@ -453,7 +453,7 @@ export default function ProductForm() {
                     <div className="section-label">가격 정보</div>
                     <div className="form-grid">
                         <div className="form-row">
-                            <label className="form-label">공급가</label>
+                            <label className="form-label">매입가</label>
                             <div className="form-control">
                                 <input type="number" className="lg" placeholder="0"
                                        value={supplyPrice}
