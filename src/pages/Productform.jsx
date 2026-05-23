@@ -323,6 +323,10 @@ export default function ProductForm() {
         setRemoteAreas((prev) =>
             prev.map((item, idx) => (idx === i ? { ...item, [key]: val } : item))
         );
+    const removeRemoteArea = (i) =>
+        setRemoteAreas((prev) =>
+            prev.length > 1 ? prev.filter((_, idx) => idx !== i) : prev
+        );
 
     const handleSave = () => alert("상품이 저장되었습니다.");
 
@@ -558,6 +562,15 @@ export default function ProductForm() {
                                     <input type="number" className="sm" placeholder="5000"
                                            value={area.cost} onChange={(e) => updateRemoteArea(i, "cost", e.target.value)} />
                                     <span style={{ fontSize: 13, color: "var(--text-secondary)" }}>원</span>
+                                    {remoteAreas.length > 1 && (
+                                        <button
+                                            className="btn-icon sm"
+                                            style={{ background: "var(--danger)", fontSize: 16, marginLeft: "auto" }}
+                                            onClick={() => removeRemoteArea(i)}
+                                        >
+                                            ×
+                                        </button>
+                                    )}
                                 </div>
                             ))}
                         </div>
