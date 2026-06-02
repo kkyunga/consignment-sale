@@ -82,7 +82,7 @@ export default function CalculatorPage() {
     return (
         <div>
             <div className="page-header">
-                <div className="page-title">계산기</div>
+                <div className="page-title">마진 계산기</div>
                 <div className="page-subtitle">판매가와 마진을 손쉽게 계산하세요</div>
             </div>
 

@@ -12,7 +12,7 @@ const NAV = [
   { key: "productList",     icon: "☰", label: "상품 목록" },
   { key: "productAdd",      icon: "＋", label: "상품 추가" },
   { key: "orderManagement", icon: "◫", label: "주문 관리" },
-  { key: "calculator",      icon: "⊞", label: "계산기" },
+  { key: "calculator",      icon: "⊞", label: "마진 계산기" },
 ];
 
 export default function App() {
