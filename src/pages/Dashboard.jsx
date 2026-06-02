@@ -243,7 +243,6 @@ export default function Dashboard() {
                             <th>플랫폼</th>
                             <th>상품명 (옵션)</th>
                             <th>금액</th>
-                            <th>구매자명</th>
                             <th>상태</th>
                         </tr>
                         </thead>
@@ -255,7 +254,6 @@ export default function Dashboard() {
                                 </td>
                                 <td>{row.product}</td>
                                 <td style={{ fontWeight: 600 }}>{row.price}원</td>
-                                <td>{row.buyer}</td>
                                 <td>
                     <span className={`status-badge ${statusClass[row.status]}`}>
                       {row.status}

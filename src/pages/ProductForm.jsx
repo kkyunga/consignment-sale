@@ -3,12 +3,25 @@ import { useState } from "react";
 /* ──────────────────────────────────────
    Platform Add Modal
 ────────────────────────────────────── */
+const PLATFORM_TYPE_OPTIONS = [
+    "쿠팡", "11번가", "네이버 스마트스토어", "지마켓", "옥션",
+    "티몬", "인터파크", "롯데온", "SSG닷컴", "카카오쇼핑", "기타",
+];
+
 function PlatformModal({ onClose, onAdd }) {
-    const [form, setForm] = useState({ url: "", id: "", password: "", name: "" });
+    const [form, setForm] = useState({ platformType: "", id: "", password: "", name: "" });
     const [message, setMessage] = useState(null);
 
+    const handleTypeChange = (value) => {
+        setForm((prev) => ({
+            ...prev,
+            platformType: value,
+            name: prev.name === "" || PLATFORM_TYPE_OPTIONS.includes(prev.name) ? value : prev.name,
+        }));
+    };
+
     const handleAdd = () => {
-        if (!form.url || !form.id || !form.password || !form.name) {
+        if (!form.platformType || !form.id || !form.password || !form.name) {
             setMessage({ type: "error", text: "모든 항목을 입력해 주세요." });
             return;
         }
@@ -24,11 +37,36 @@ function PlatformModal({ onClose, onAdd }) {
                     <span style={{ color: "var(--accent)" }}>⬡</span> 플랫폼 추가
                 </div>
                 <div className="modal-form">
+                    {/* 플랫폼 종류 — select */}
+                    <div className="modal-field">
+                        <label>플랫폼 종류</label>
+                        <select
+                            value={form.platformType}
+                            onChange={(e) => handleTypeChange(e.target.value)}
+                            style={{
+                                width: "100%",
+                                padding: "9px 12px",
+                                border: "1.5px solid var(--border)",
+                                borderRadius: "var(--radius-sm)",
+                                fontFamily: "'Noto Sans KR', sans-serif",
+                                fontSize: 13,
+                                color: form.platformType ? "var(--text-primary)" : "var(--text-muted)",
+                                background: "var(--surface)",
+                                cursor: "pointer",
+                                outline: "none",
+                            }}
+                        >
+                            <option value="" disabled>플랫폼을 선택하세요</option>
+                            {PLATFORM_TYPE_OPTIONS.map((opt) => (
+                                <option key={opt} value={opt}>{opt}</option>
+                            ))}
+                        </select>
+                    </div>
+
+                    {/* 나머지 필드 */}
                     {[
-                        { label: "URL 주소", key: "url", type: "text", placeholder: "https://..." },
                         { label: "아이디", key: "id", type: "text", placeholder: "판매자 아이디" },
                         { label: "비밀번호", key: "password", type: "password", placeholder: "••••••••" },
-                        { label: "플랫폼명", key: "name", type: "text", placeholder: "예: 쿠팡, 스마트스토어" },
                     ].map(({ label, key, type, placeholder }) => (
                         <div className="modal-field" key={key}>
                             <label>{label}</label>
@@ -196,11 +234,14 @@ function OptionGroup({ group, groupIndex, onUpdate, onRemoveGroup }) {
 /* ──────────────────────────────────────
    Platform Tab Margin Panel
 ────────────────────────────────────── */
-function PlatformMarginPanel({ platform, supplyPrice, salePrice }) {
+function PlatformMarginPanel({ platform, supplyPrice, salePrice, globalFee }) {
     const feeRates = { 쿠팡: 0.108, 지마켓: 0.1, 네이버: 0.0563};
-    const vatRate = 10;
+    const [vatRate, setVatRate] = useState(10);
 
-    const fee = Math.round((salePrice || 0) * (feeRates[platform] || 0.1));
+    // 수수료: 사용자가 직접 입력한 %가 있으면 그것을 적용, 없으면 플랫폼별 기본 요율 적용
+    const fee = globalFee !== "" 
+        ? Math.round((salePrice || 0) * (Number(globalFee) / 100))
+        : Math.round((salePrice || 0) * (feeRates[platform] || 0.1));
     const margin = (salePrice || 0) - (supplyPrice || 0) - fee;
     const marginRate = salePrice ? ((margin / salePrice) * 100).toFixed(1) : 0;
     const vat = Math.round((salePrice || 0) * (vatRate / 100));
@@ -223,7 +264,7 @@ function PlatformMarginPanel({ platform, supplyPrice, salePrice }) {
             <div className="form-row">
                 <label className="form-label">부가세</label>
                 <div className="form-control">
-                    <input type="number" className="sm" defaultValue={vatRate} style={{ width: 70 }} />
+                    <input type="number" className="sm" value={vatRate} onChange={(e) => setVatRate(Number(e.target.value))} style={{ width: 70 }} />
                     <span style={{ color: "var(--text-secondary)", fontSize: 13 }}>%</span>
                     <span style={{ color: "var(--text-muted)", margin: "0 4px" }}>(</span>
                     <input type="number" className="md" value={vat || ""} readOnly
@@ -277,6 +318,7 @@ export default function ProductForm() {
 
     const [supplyPrice, setSupplyPrice] = useState("");
     const [salePrice, setSalePrice] = useState("");
+    const [fee, setFee] = useState("");
 
     const [shippingType, setShippingType] = useState("free");
     const [shippingCost, setShippingCost] = useState("");
@@ -367,6 +409,15 @@ export default function ProductForm() {
                             >
                                 ＋ 플랫폼 추가
                             </button>
+                        </div>
+                    </div>
+                    <div className="form-row">
+                        <label className="form-label">수수료</label>
+                        <div className="form-control">
+                            <input type="number" className="lg" placeholder="0"
+                                   value={fee}
+                                   onChange={(e) => setFee(e.target.value)} />
+                            <span style={{ color: "var(--text-secondary)", fontSize: 13 }}>%</span>
                         </div>
                     </div>
                 </div>
@@ -629,6 +680,7 @@ export default function ProductForm() {
                         platform={activeTab}
                         supplyPrice={supplyPrice}
                         salePrice={salePrice}
+                        globalFee={fee}
                     />
                 </div>
 

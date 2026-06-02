@@ -1,16 +1,18 @@
 import { useState } from "react";
-import Dashboard       from "./pages/Dashboard";
-import ProductForm     from "./pages/ProductForm.jsx";
-import ProductList     from "./pages/ProductList";
-import ProductDetail   from "./pages/ProductDetail";
-import OrderManagement from "./pages/OrderManagement";
+import Dashboard         from "./pages/Dashboard";
+import ProductForm       from "./pages/ProductForm.jsx";
+import ProductList       from "./pages/ProductList";
+import ProductDetail     from "./pages/ProductDetail";
+import OrderManagement   from "./pages/OrderManagement";
+import CalculatorPage    from "./pages/MarginCalculator";
 import "./App.css";
 
 const NAV = [
-  { key: "dashboard",    icon: "▦", label: "대시보드" },
-  { key: "productList",  icon: "☰", label: "상품 목록" },
-  { key: "productAdd",   icon: "＋", label: "상품 추가" },
+  { key: "dashboard",       icon: "▦", label: "대시보드" },
+  { key: "productList",     icon: "☰", label: "상품 목록" },
+  { key: "productAdd",      icon: "＋", label: "상품 추가" },
   { key: "orderManagement", icon: "◫", label: "주문 관리" },
+  { key: "calculator",      icon: "⊞", label: "계산기" },
 ];
 
 export default function App() {
@@ -66,6 +68,7 @@ export default function App() {
               />
           )}
           {page === "orderManagement"  && <OrderManagement />}
+          {page === "calculator"       && <CalculatorPage />}
         </main>
       </div>
   );
